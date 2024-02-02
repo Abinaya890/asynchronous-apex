@@ -1,0 +1,19 @@
+public class BatchCase implements Database.Batchable<sObject> {
+    public Database.QueryLocator start(Database.BatchableContext BC){
+        String cs = 'select  id, status, Closed_Reason__c from case';
+        return Database.getQueryLocator(cs);
+    }
+    public void execute(Database.BatchableContext BC, List<Case> calist){
+        List<Case> caseupdate = new List<Case>();
+        for(case cb : calist){
+            if( cb.status == 'Closed'){
+              cb.Closed_Reason__c ='Batch class update reason';
+                caseupdate.add(cb);
+            }
+            update calist;
+        }
+    }
+    public void finish(Database.BatchableContext BC){
+        system.debug('case update completed');
+    }
+}
