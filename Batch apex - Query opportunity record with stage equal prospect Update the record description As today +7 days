@@ -1,0 +1,26 @@
+public class BatchOpportunity implements Database.Batchable<SObject> 
+{
+    public Database.QueryLocator start(Database.BatchableContext BC)
+    {
+        String abc = 'SELECT Id, Name, StageName, CloseDate, Description FROM Opportunity';
+        return Database.getQueryLocator(abc);
+    }
+    public void execute(Database.BatchableContext BC, list<Opportunity> op)
+    {
+       
+        
+          Date newdesdate = Date.today().addDays(7);
+        String newDesc = newdesdate.format();
+            
+           for(Opportunity ops : op){
+               if(ops.StageName == 'Prospecting'){
+               ops.Description =  'Updated on ' + newDesc;
+               }
+        }
+        update op;
+    }
+    public void Finish(Database.BatchableContext BC)
+    {
+        System.debug('Opportunity updated');
+    }
+}
