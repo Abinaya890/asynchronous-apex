@@ -21,6 +21,6 @@ public class BatchOpportunity implements Database.Batchable<SObject>
     }
     public void Finish(Database.BatchableContext BC)
     {
-        System.debug('Opportunity updated');
+      
     }
 }
